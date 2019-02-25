@@ -12,6 +12,10 @@ public class Note {
         creationTime = new Date();
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Note(String noteRecord, int id) {
         this.noteRecord = noteRecord;
         this.id = id;
