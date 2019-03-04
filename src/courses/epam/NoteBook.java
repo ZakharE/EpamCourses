@@ -33,6 +33,25 @@ public class NoteBook {
 
     }
 
+    public void editHeader(int id, String newHeader) {
+        notes[id].setHeader(newHeader);
+    }
+
+    public void removeFromNote(int id, String remove) {
+        String record = notes[id].getNoteRecord();
+        record = record.replaceAll("\\b" + remove + "\\b","");
+        notes[id].setNoteRecord(record);
+    }
+
+    public void addToNote(int id, String addition) {
+        String newRecord = notes[id].getNoteRecord() + " " + addition;
+        notes[id].setNoteRecord(newRecord);
+    }
+
+    public int getNotesNumber(){
+        return lastAvaliableNoteId;
+    }
+
     public void showAllNote() {
         for (int i = 0; i <= lastAvaliableNoteId ; i++) {
             System.out.println(notes[i].toString());
