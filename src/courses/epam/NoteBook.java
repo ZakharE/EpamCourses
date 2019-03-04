@@ -3,75 +3,104 @@ package courses.epam;
 import java.util.Arrays;
 
 public class NoteBook {
-    private Note[] notes = new Note[10];
-    private static int lastAvaliableNoteId = -1;
+    private final int DEFAULT_NOTES_ARRAY_SIZE = 10;
+    private Note[] notes;
+    private static int lastAvailableNoteId = -1;
 
+    public NoteBook() {
+        notes = new Note[DEFAULT_NOTES_ARRAY_SIZE];
+    }
 
     public void addNote(String noteRecord) {
-        if(lastAvaliableNoteId == notes.length - 1) {
-            notes = changeArraySize(notes, true);
+        if (lastAvailableNoteId == notes.length - 1) {
+            notes = changeArraySize( true);
         }
-        ++lastAvaliableNoteId;
-        notes[lastAvaliableNoteId] = new Note(noteRecord, lastAvaliableNoteId);
+        ++lastAvailableNoteId;
+        notes[lastAvailableNoteId] = new Note(noteRecord, lastAvailableNoteId);
     }
 
     public void deleteNote(int id) {
-        if(isValidID(id)) {
-            for (int i = id; i < lastAvaliableNoteId ; i++) {
-                notes[i] = notes[i+1];
-                notes[i].setId(i);
-            }
-            --lastAvaliableNoteId;
-        } else
-    {
-        System.out.println("Not available ID");
-    }
-        if(lastAvaliableNoteId <= notes.length/4) {
-            notes = changeArraySize(notes, false);
+        if (!isValidID(id)) {
+            return;
+        }
+
+        for (int i = id; i < lastAvailableNoteId; i++) {
+            notes[i] = notes[i + 1];
+            notes[i].setId(i);
+        }
+
+        --lastAvailableNoteId;
+
+        if (lastAvailableNoteId <= notes.length / 4) {
+            notes = changeArraySize(false);
         }
 
 
     }
 
     public void editHeader(int id, String newHeader) {
+        if (!isValidID(id)) {
+            return;
+        }
         notes[id].setHeader(newHeader);
     }
 
-    public void removeFromNote(int id, String remove) {
-        String record = notes[id].getNoteRecord();
-        record = record.replaceAll("\\b" + remove + "\\b","");
-        notes[id].setNoteRecord(record);
+    public void editNoteRecord(int id, String newRecord) {
+        if (!isValidID(id)) {
+            return;
+        }
+        notes[id].setNoteRecord(newRecord);
+    }
+
+    public void editHeaderAndNoteRecord(int id, String newHeader, String newRecord) {
+        if (!isValidID(id)) {
+            return;
+        }
+        notes[id].setHeader(newHeader);
+        notes[id].setNoteRecord(newRecord);
     }
 
     public void addToNote(int id, String addition) {
+        if (!isValidID(id)) {
+            return;
+        }
         String newRecord = notes[id].getNoteRecord() + " " + addition;
         notes[id].setNoteRecord(newRecord);
     }
 
-    public int getNotesNumber(){
-        return lastAvaliableNoteId;
+    public void removeFromNote(int id, String remove) {
+        if (!isValidID(id)) {
+            return;
+        }
+        String record = notes[id].getNoteRecord();
+        record = record.replaceAll("\\b" + remove + "\\b", "");
+        notes[id].setNoteRecord(record);
+    }
+
+    public int getNotesNumber() {
+        return ++lastAvailableNoteId;
     }
 
     public void showAllNote() {
-        for (int i = 0; i <= lastAvaliableNoteId ; i++) {
+        for (int i = 0; i <= lastAvailableNoteId; i++) {
             System.out.println(notes[i].toString());
         }
 
     }
 
-    private Note[] changeArraySize(Note[] notes, boolean isIncreasing) {
-        Note[] newNote;
+    private Note[] changeArraySize(boolean isIncreasing) {
+        Note[] newNotes;
 
-        if(isIncreasing) {
-            newNote = Arrays.copyOf(notes, notes.length*2);
+        if (isIncreasing) {
+            newNotes = Arrays.copyOf(notes, notes.length * 2);
         } else {
-            newNote = Arrays.copyOf(notes, notes.length / 2);
+            newNotes = Arrays.copyOf(notes, notes.length / 2);
         }
-        return newNote;
+        return newNotes;
     }
 
     private boolean isValidID(int id) {
-        if(id < 0 || id > lastAvaliableNoteId) {
+        if (id < 0 || id > lastAvailableNoteId) {
             System.out.println("This ID not found");
             return false;
         }

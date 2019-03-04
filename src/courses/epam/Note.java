@@ -4,8 +4,10 @@ import java.util.Date;
 
 public class Note {
     private int id;
-    private String header = "Default";
-    private String noteRecord = "";
+    private final String DEFAULT_HEADER = "Default";
+    private final String DEFAULT_NOTE_RECORD = "";
+    private String header;
+    private String noteRecord;
     private Date creationTime;
 
     public Note(int id) {
@@ -14,15 +16,14 @@ public class Note {
     }
 
     public Note(String noteRecord, int id) {
+        this(id);
         this.noteRecord = noteRecord;
-        this.id = id;
-        creationTime = new Date();
     }
 
     public Note(int id, String header, String noteRecord) {
-        this.id = id;
+        this(noteRecord, id);
         this.header = header;
-        this.noteRecord = noteRecord;
+
     }
 
     public void setId(int id) {
@@ -43,9 +44,14 @@ public class Note {
 
     @Override
     public String toString() {
-        return  header + '\n' +
-                noteRecord + '\'' +
-                "Date of creation:" + creationTime;
+        StringBuilder result = new StringBuilder();
+        result.append(header);
+        result.append('\n');
+        result.append(noteRecord);
+        result.append('\n');
+        result.append("Date of creation:");
+        result.append(creationTime);
+        return  result.toString();
     }
 
 
