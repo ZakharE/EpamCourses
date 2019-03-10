@@ -12,6 +12,7 @@ public class Note {
 
     public Note(int id) {
         this.id = id;
+        this.header = DEFAULT_HEADER;
         creationTime = new Date();
     }
 

@@ -5,11 +5,12 @@ import java.util.Arrays;
 public class NoteBook {
     private final int DEFAULT_NOTES_ARRAY_SIZE = 10;
     private Note[] notes;
-    private static int lastAvailableNoteId = -1;
+    private int lastAvailableNoteId = -1;
 
     public NoteBook() {
         notes = new Note[DEFAULT_NOTES_ARRAY_SIZE];
     }
+
 
     public void addNote(String noteRecord) {
         if (lastAvailableNoteId == notes.length - 1) {
@@ -18,7 +19,9 @@ public class NoteBook {
         ++lastAvailableNoteId;
         notes[lastAvailableNoteId] = new Note(noteRecord, lastAvailableNoteId);
     }
-
+    public int getArraySize() {
+        return notes.length;
+    }
     public void deleteNote(int id) {
         if (!isValidID(id)) {
             return;
@@ -78,10 +81,14 @@ public class NoteBook {
     }
 
     public int getNotesNumber() {
-        return ++lastAvailableNoteId;
+        return lastAvailableNoteId + 1;
     }
 
     public void showAllNote() {
+        if(lastAvailableNoteId < 0) {
+            System.out.println("Sorry. Nothing to show :(");
+            return;
+        }
         for (int i = 0; i <= lastAvailableNoteId; i++) {
             System.out.println(notes[i].toString());
         }
