@@ -19,7 +19,7 @@ public class NoteBook {
         ++lastAvailableNoteId;
         notes[lastAvailableNoteId] = new Note(noteRecord, lastAvailableNoteId);
     }
-    public int getArraySize() {
+    public int getNoteBookCapacity() {
         return notes.length;
     }
     public void deleteNote(int id) {
@@ -34,7 +34,7 @@ public class NoteBook {
 
         --lastAvailableNoteId;
 
-        if (lastAvailableNoteId <= notes.length / 4) {
+        if (lastAvailableNoteId <= notes.length / 4 && lastAvailableNoteId > DEFAULT_NOTES_ARRAY_SIZE) {
             notes = changeArraySize(false);
         }
 
@@ -80,7 +80,7 @@ public class NoteBook {
         notes[id].setNoteRecord(record);
     }
 
-    public int getNotesNumber() {
+    public int getSize() {
         return lastAvailableNoteId + 1;
     }
 
@@ -90,7 +90,7 @@ public class NoteBook {
             return;
         }
         for (int i = 0; i <= lastAvailableNoteId; i++) {
-            System.out.println(notes[i].toString());
+            System.out.println(notes[i]);
         }
 
     }

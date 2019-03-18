@@ -17,7 +17,7 @@ public class Main {
 //        nb.deleteNote(3);
         nb.addNote("asd");
         nb.deleteNote(23);
-        System.out.println(nb.getNotesNumber());
+        System.out.println(nb.getSize());
         nb.showAllNote();
 
     }
